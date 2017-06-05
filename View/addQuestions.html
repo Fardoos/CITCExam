@@ -1,0 +1,149 @@
+  {% include "../View/header.html" %}
+  <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title"> Table with Questions </h4>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <form action="/addQuestions" method="post" enctype="multipart/form-data">
+
+                                         <div class='row'>
+
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label>course Name</label>
+                                                 <select name="courseID" >
+                                                      {% for course in courses %}
+                                                     <option value="{{course['id']}}"  >{{course['course_name']}}</option>
+                                                     {% end %}
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                         </div>
+                                             <div class='row'>
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for='chapterNumber'>chapterNumber</label>
+                                                <input  type="number" min="1" max="100" value="1" name="chapterNumber" id="chapterNumber"/>
+
+                                            </div>
+                                        </div>
+                                             </div>
+                                    {%for i in range(3)%}
+                                     <fieldset style="border-style: solid; border-color: #0000ff; width:80%;margin-left:30px;background-color:#e2e5dc;">
+                                        <legend>Question:{{i+1}}</legend>
+                                      <div class='row'>
+                                           <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label>question</label>
+                                                 <input type='text' class='form-control'  name='quesion{{i}}' required>
+                                            </div>
+                                           </div>
+                                            </div>
+                                     <div class='row'>
+                                           <div class='col-md-4'>
+                                            <div class='form-group'>
+                                                <label>answers:</label>
+                                                 a-<input type='text' class='form-control'  name='ans1{{i}}' required>
+                                            </div>
+                                           </div>
+                                         <div class='col-md-4'>
+                                            <div class='form-group'>
+
+                                                 b-<input type='text' class='form-control'  name='ans2{{i}}' required >
+                                            </div>
+                                           </div>
+
+                                         <div class='col-md-4'>
+                                            <div class='form-group'>
+
+                                                 c-<input type='text' class='form-control'  name='ans3{{i}}' required>
+                                            </div>
+                                           </div>
+                                            </div>
+                                             <div class='row'>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <label>correct answers:</label>
+                                                         a<input type="radio" name="correctAns{{i}}" value="a"  required>
+                                                    </div>
+                                                  </div>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        b <input type="radio" name="correctAns{{i}}" value="b" >
+                                                    </div>
+                                                  </div>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                         c<input type="radio" name="correctAns{{i}}" value="c" >
+                                                    </div>
+                                                  </div>
+                                             </div>
+                                                <div class='row'>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <label>Levels:</label>
+                                                         <input type="radio" name="level{{i}}" value="difficult" required>difficult
+                                                    </div>
+                                                  </div>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <input type="radio" name="level{{i}}" value="simple">simple
+                                                    </div>
+                                                  </div>
+
+                                             </div>
+                                            <div class='row'>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <label>Objective:</label>
+                                                         <input type="radio" name="objective{{i}}" value="reminding" required>reminding
+                                                    </div>
+                                                  </div>
+                                                  <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <input type="radio" name="objective{{i}}" value="understand">understand
+                                                    </div>
+                                                  </div>
+                                                 <div class='col-md-4'>
+                                                    <div class='form-group'>
+                                                        <input type="radio" name="objective{{i}}" value="creativity">creativity
+                                                    </div>
+                                                  </div>
+
+                                             </div>
+                                         </fieldset>
+                                    {% end%}
+                                               <div class='row'>
+
+                                          <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for="add"></label>
+
+                                        <input type="submit" id="add" name="submit" value="Add" style="margin-left:50px;width:150px;color:blue;"/>
+                                            </div>
+                                        </div>
+                                         </div>
+
+
+                                        </form>
+                                          </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+
+  {% include "../View/footer.html" %}
+
+

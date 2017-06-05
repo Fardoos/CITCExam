@@ -1,0 +1,73 @@
+
+
+  {% include "../View/header.html" %}
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title"> Table with course </h4>
+                                <p class="category">can update this course</p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <form action="/addCourse" method="post" enctype="multipart/form-data">
+
+
+
+                                         <div class='row'>
+
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label>course title</label>
+                                                <input type='text' class='form-control'  id='title' name='courseName' >
+                                            </div>
+                                        </div>
+                                         </div>
+                                             <div class='row'>
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for='chapterNumber'>chapterNumber</label>
+                                                <input  type="number" min="1" max="100" value="1" name="chapterNumber" id="chapterNumber"/>
+
+
+
+                                            </div>
+                                        </div>
+                                             </div>
+                                                 <div class='row'>
+
+                                          <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for="add"></label>
+
+                                        <input type="submit" name="submit" value="Add" style="margin-left:50px;width:150px;color:blue;"/>
+                                            </div>
+                                        </div>
+                                         </div>
+
+                                        </form>
+                                          </div>
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+
+  {% include "../View/footer.html" %}
+
+

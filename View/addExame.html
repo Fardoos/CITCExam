@@ -1,0 +1,199 @@
+  {% include "../View/header.html" %}
+  <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title"> Table with Questions </h4>
+
+
+                            </div>
+
+                            <div class="alert alert-danger fade in" style="display: none;" id="msgError">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                     <strong id="error">Error!</strong>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <form action="/addExame" method="post" enctype="multipart/form-data" id="myform">
+
+                                         <div class='row'>
+
+                                        <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label>course Name</label>
+                                                 <select name="courseID" id="dropdown_id" >
+                                                     <option value="-1">select course</option>
+                                                      {% for course in courses %}
+                                                     <option value="{{course['id']}}"  >{{course['course_name']}}</option>
+                                                     {% end %}
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                         </div>
+
+                                     <div class='row'>
+                                           <div class='col-md-4'>
+                                            <div class='form-group'>
+                                                <label>chapters</label>
+
+                                                <div id="course_chapters">
+
+                                                </div>
+
+                                            </div>
+                                           </div>
+                                            </div>
+
+                                       <div class="row">
+                                           <div class='col-md-4'>
+                                               <label>Level:Number of Questions</label>
+                                           </div>
+                                         <div class='col-md-2'>
+                                         <div class='form-group'>
+                                                <label for='simple'>simple</label>
+                                                <input  type="number" min="1" max="12" value="1" name="simple" id="simple"/>
+
+                                            </div>
+
+                                         </div>
+                                             <div class='col-md-2'>
+                                         <div class='form-group'>
+                                                <label for='difficult'> difficult</label>
+                                                <input  type="number" min="1" max="12" value="1" name="difficult" id="difficult"/>
+
+                                            </div>
+                                         </div>
+                                    </div>
+                                    <div class="row">
+                                           <div class='col-md-4'>
+                                               <label>Objective:Number of Questions</label>
+                                           </div>
+                                         <div class='col-md-2'>
+                                         <div class='form-group'>
+                                                <label for='reminding'>reminding</label>
+                                                <input  type="number" min="1" max="12" value="1" name="reminding" id="reminding"/>
+
+                                            </div>
+
+                                         </div>
+                                             <div class='col-md-2'>
+                                                <div class='form-group'>
+                                                <label for='understanding'> understanding</label>
+                                                <input  type="number" min="1" max="12" value="1" name="understanding" id="understanding"/>
+
+                                            </div>
+                                         </div>
+                                        <div class='col-md-2'>
+                                                <div class='form-group'>
+                                                <label for='creativity'> creativity</label>
+                                                <input  type="number" min="1" max="12" value="1" name="creativity" id="creativity"/>
+
+                                            </div>
+                                         </div>
+                                    </div>
+
+                                               <div class='row'>
+
+                                          <div class='col-md-6'>
+                                            <div class='form-group'>
+                                                <label for="add"></label>
+
+                                        <input type="submit" id="add" name="submit" value="Create Exame" style="margin-left:50px;width:150px;color:blue;"/>
+                                            </div>
+                                        </div>
+                                         </div>
+
+
+                                        </form>
+                                          </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+<script>
+   jQuery(document).ready(function($) {
+   $('input.chaptersNum').change(function(){
+    if ($(this).is(':checked'))
+    $(this).next('input.Numquestions').show();
+else
+    $(this).next('input.Numquestions').hide();
+
+    }).change();
+
+    $('#dropdown_id').change(function (){
+
+    var courseId=$('#dropdown_id').val();
+    var x = document.getElementById("course_chapters");
+
+    x.innerHTML="";
+
+    <!--alert(courseId);-->
+       $.ajax({
+        url: '/getChapters',
+        type: "post",
+         datatype:"json",
+         data: {'courseId':courseId},
+          success: function(response){
+          var data=JSON.parse(response);
+          <!--alert(data[1].chapter_num);-->
+          for(var i=0;i<data.length;i++)
+          {
+            var ID=data[i].chapter_num;
+            x.innerHTML+=data[i].chapter_num+"<input type='checkbox'   name='chapters' value='"+ID+"'  >";
+          }
+
+
+        }
+    });
+
+
+
+});
+$("#error").text("");
+$("#myform").submit(function(e){
+    var s_count =$("#simple").val();
+    var d_count = $("#difficult").val();
+    var r_count = $("#reminding").val();
+    var u_count = $("#understanding").val();
+    var c_count = $("#creativity").val();
+    var courseID = $("#dropdown_id").val();
+
+    if(parsInt(s_count+d_count)!=parsInt(r_count+u_count+c_count))
+    {
+        alert("not equal")
+        $("#error").text("Number of questions not equal");
+        $("#msgError").css("display", "block");
+         e.preventDefault();
+    }
+    else
+    {
+        $(this).unbind('submit').submit()
+    }
+    if(parseInt(courseID)<0)
+    {
+        $("#error").text("plz select course");
+         $("#msgError").css("display", "block");
+         e.preventDefault();
+
+    }
+    else
+    {
+        $(this).unbind('submit').submit()
+    }
+
+  });
+
+});
+</script>
+
+
+
+
+  {% include "../View/footer.html" %}
+
+

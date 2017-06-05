@@ -1,0 +1,17 @@
+<html>
+<header>
+    <title>Home</title>
+</header>
+<body>
+
+<ul>
+    {% for shapter in c %}
+
+    <form action="/ChapterSelect" method="post"><input type="hidden" name="shapterID" value='{{shapter["chapter_num"]}}'>
+              <input type="submit"  class="btn btn-default" value='{{shapter["chapter_num"]}}'></form></li>
+
+    {% end %}
+    </ul>
+
+</body>
+</html>

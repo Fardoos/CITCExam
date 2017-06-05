@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title> CITC project</title>
+        <!-- Bootstrap Core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->
+
+    <link href="static/styleExam.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/templatemo-style.css">
+
+  <script src="static/js/typed.js"></script>
+  <script src="static/js/custom.js"></script>
+
+
+</head>
+
+<body id="top">
+
+  <header>
+
+
+    <div class="container">
+      <h3 style="text-align:center"><a data-scroll href="/logout" style="float:left;background-color:lavenderblush;"class="btn btn-default wow fadeInUp" data-wow-offset="50" data-wow-delay="0.6s">Log Out</a>
+        Communication and Information Technology Center<br /> Mansoura Branch</h3>
+    </div>
+  </header>
+  <!-- end header -->
+  <!-- start home -->
+  <section id="home">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <h1 class="wow fadeIn" data-wow-offset="50" data-wow-delay="0.9s">Exam System <span> <br />CITC</span></h1>
+          <div class="element">
+            <div class="sub-element">Hello, This is an Exame</div>
+            <div class="sub-element">Created by Fardous Gamal</div>
+            <div class="sub-element">To start please select course.</div>
+          </div>
+          {% for name in courseName %}
+
+<!--<a href="Exame.html/%s" % 1 >{{ name['course_name'] }}</a> <br>-->
+    <form action="/Exame" method="post"><input type="hidden" name="courseID" value='{{name["id"]}}'>
+              <input type="submit"  class="btn btn-default" value='{{name["course_name"]}}'class="btn btn-default wow fadeInUp" data-wow-offset="50" data-wow-delay="0.6s" ></form>
+
+    {% end %}
+
+          <!--<a data-scroll href="exam.html" class="btn btn-default wow fadeInUp" data-wow-offset="50" data-wow-delay="0.6s">Exam Mode</a>-->
+          <!--<a data-scroll href="practic.html" class="btn btn-default wow fadeInUp" data-wow-offset="50" data-wow-delay="0.6s" style="margin-left:80px;">Practice Mode</a>-->
+          </div>
+      </div>
+    </div>
+  </section>
+  <footer id="mainfooter" style="height:50px; margin-top:50px;">
+    <p>CopyRights &copy; reserved to CITC Mansoura </p>
+  </footer>
+
+  <!-- end home -->
+<!-- jQuery -->
+<script src="static/vendor/jquery/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
