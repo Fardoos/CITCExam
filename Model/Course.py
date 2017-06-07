@@ -10,6 +10,11 @@ class Course:
         data = cursor.fetchall();
         return data
         #print( data );
+    def selectChapterNum(c_id):
+        cursor.execute( "SELECT * FROM 	Courses WHERE id="+str(c_id) );
+        data = cursor.fetchall();
+        return data
+        #print( data );
 
     def insert( name,chapterNum):
         cursor.execute("""INSERT INTO Courses (course_name ,chapter_nums) VALUES (%s,%s)""",

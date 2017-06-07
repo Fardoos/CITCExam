@@ -146,7 +146,7 @@ class addQuestions(web.RequestHandler):
         chapterNumber = self.get_argument("chapterNumber")
         chapterID=Chapter.Chapter.insert(courseID,chapterNumber)
         if (chapterID):
-            for i in range(3):
+            for i in range(12):
                 quesion=self.get_argument("quesion"+str(i))
                 ans1=self.get_argument("ans1"+str(i))
                 ans2 = self.get_argument("ans2"+str(i))
@@ -198,7 +198,8 @@ class addExame(web.RequestHandler):
         for id in chaptersIDs:
             chapterIDsArray.append(id["id"])
         # print(chapterIDsArray)
-        quesionsBank=Question.Question.selectQuestionBychID(chapterIDsArray)
+        quesionsBank2=Question.Question.selectQuestionBychID(chapterIDsArray)
+        quesionsBank=random.sample(quesionsBank2,12)
         print(quesionsBank)
 
         simple=self.get_argument("simple")
@@ -220,11 +221,7 @@ class addExame(web.RequestHandler):
                     resultArray.append(question)
                     simple_count=simple_count-1
                     understanding_count=understanding_count-1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
+
 
 
             elif question["level"]=="simple" and question["objective"]=="creativity":
@@ -232,22 +229,13 @@ class addExame(web.RequestHandler):
                     resultArray.append(question)
                     simple_count=simple_count-1
                     creativity_count=creativity_count-1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
 
             elif question["level"] == "simple" and question["objective"] == "reminding":
                 if 0<simple_count<=int(simple) and 0<reminding_count<=int(reminding):
                     resultArray.append(question)
                     simple_count =simple_count-1
                     reminding_count =reminding_count-1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
+
 
 
 
@@ -256,11 +244,7 @@ class addExame(web.RequestHandler):
                     resultArray.append(question)
                     difficult_count =difficult_count- 1
                     understanding_count =understanding_count- 1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
+
 
             elif question["level"] == "difficult" and question["objective"] == "creativity":
                 if 0<difficult_count<=int(difficult) and 0<creativity_count <= int(creativity):
@@ -278,11 +262,6 @@ class addExame(web.RequestHandler):
                     resultArray.append(question)
                     difficult_count =difficult_count- 1
                     reminding_count =reminding_count- 1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
 
         print(resultArray)
         self.render("../View/exam.html", data=resultArray)
@@ -296,6 +275,31 @@ class getChapters(web.RequestHandler):
         dataDic={"data":data}
         # self.write(dataDic)
         self.write(json.dumps(data))
+class getNumOfChapters(web.RequestHandler):
+    def post(self):
+        courseid= self.get_argument("courseId")
+        myData=[]
+        rangeCount=[]
+        dict = {"c" : courseid}
+        chapters=Chapter.Chapter.selectChapterByCourseId(courseid)
+        chaptersCount=Course.Course.selectChapterNum(courseid);
+        # print(chapters[0]['chapter_num']);
+        # print(chaptersCount[0]["chapter_nums"]);
+        for i in range(1,chaptersCount[0]["chapter_nums"]+1):
+            rangeCount.append(i)
+        print(rangeCount)
+
+        for chaptNo in chapters:
+            for i in rangeCount:
+                print(i)
+                if chaptNo['chapter_num']==i:
+                    rangeCount.remove(i)
+
+
+                print(rangeCount)
+        print(rangeCount)
+        dataDic={"data":rangeCount}
+        self.write(json.dumps(rangeCount))
 
 class deleteCourse(web.RequestHandler):
     def get(self,id):
@@ -316,7 +320,8 @@ app = web.Application([ (r"/", Home),
                         (r"/addExame",addExame),
                         (r"/delete/([0-9]+)",deleteCourse),
                         (r"/getChapters",getChapters),
-                        (r"/dashboard",dashboard)
+                        (r"/dashboard",dashboard),
+                        (r"/getNumOfChapters",getNumOfChapters)
 
                         ],debug=True,static_path='../static')
 
