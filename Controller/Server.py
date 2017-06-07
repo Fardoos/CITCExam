@@ -16,9 +16,7 @@ import cgi
 
 
 
-AnswerArray=[]
-QuestionWithAns={}
-ExameData=[]
+
 randomIDs=[]
 simple_count = 0
 difficult_count =0
@@ -93,6 +91,9 @@ class Home(web.RequestHandler):
 
 class Exame(web.RequestHandler):
     def post(self):
+        AnswerArray = []
+        QuestionWithAns = {}
+        ExameData = []
 
         questionData=Question
         answerData=Answer
@@ -180,12 +181,13 @@ class addExame(web.RequestHandler):
     def get(self):
         m = Course
         data = m.Course.selectCourses(m)
-        myList = [2, 109, 22, 10, 26, 482]
-        # print(random.sample(myList,6))
 
         self.render("../View/addExame.html",courses=data)
 
     def post(self):
+        AnswerArray = []
+        QuestionWithAns = {}
+        ExameData = []
         chapterIDsArray=[]
         # print(self.request.arguments['chapters']) checkbox array of values
         chapters=self.request.arguments['chapters']
@@ -264,7 +266,14 @@ class addExame(web.RequestHandler):
                     reminding_count =reminding_count- 1
 
         print(resultArray)
-        self.render("../View/exam.html", data=resultArray)
+        for qeu in resultArray:
+            answers=Answer.Answer.selectByQuestionId(qeu['id'])
+            AnswerArray=[]
+            for a in answers:
+                AnswerArray.append(a['answer_text'])
+            QuestionWithAns={qeu['quetion']:AnswerArray}
+            ExameData.append(QuestionWithAns)
+        self.render("../View/exam.html", data=ExameData)
 
 
 class getChapters(web.RequestHandler):
