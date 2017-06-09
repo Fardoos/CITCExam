@@ -37,9 +37,12 @@
         </div>
         <table id="table" cellspacing="20">
           {% for i, question in enumerate( data )%}
+
           <tr>
            {% for key in question.keys() %}
+
             <td>Q{{i+1}}:{{ (key)}}</td>
+
           </tr>
           <tr>
            {% for ans in question[key]%}
@@ -47,8 +50,13 @@
           </tr>
             {%end%}
            {%end%}
-
            {%end%}
+            <tr><td>============================for check=========================================</td></tr>
+            {% for i,que in enumerate(result)%}
+            <tr>
+                <td>Q{{i+1}}:{{que["level"]}}:{{que["objective"]}}</td>
+            </tr>
+            {%end%}
 
         </table>
       </aside>

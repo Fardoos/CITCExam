@@ -4,13 +4,13 @@ from Model.connection import *
 
 class User:
     def selectUser(email):
-        cursor.execute("SELECT user_name FROM Users WHERE email=%s ", (email))
+        cursor.execute("SELECT * FROM Users WHERE email=%s ", (email))
         username = cursor.fetchall();
         return username;
 
 
     def selectName(email):
-        data = cursor.execute("SELECT * FROM Users WHERE email=%s", (email))
+        data = cursor.execute("SELECT user_name FROM Users WHERE email=%s", (email))
         data = cursor.fetchall()
         return data
 

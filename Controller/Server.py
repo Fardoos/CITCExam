@@ -1,6 +1,7 @@
-from tornado import web,ioloop,websocket
+# from tornado import web,ioloop,websocket
 from Model import Course,Question,Answer,User,Chapter,correctAnswer
-from tornado import web,ioloop,websocket
+from tornado import web,ioloop
+
 import random
 # to find digit from string
 import re
@@ -201,7 +202,8 @@ class addExame(web.RequestHandler):
             chapterIDsArray.append(id["id"])
         # print(chapterIDsArray)
         quesionsBank2=Question.Question.selectQuestionBychID(chapterIDsArray)
-        quesionsBank=random.sample(quesionsBank2,12)
+        # print(len(quesionsBank2))
+        quesionsBank=random.sample(quesionsBank2,len(quesionsBank2))
         print(quesionsBank)
 
         simple=self.get_argument("simple")
@@ -253,11 +255,7 @@ class addExame(web.RequestHandler):
                     resultArray.append(question)
                     difficult_count =difficult_count- 1
                     creativity_count =creativity_count- 1
-                    print(simple_count)
-                    print(difficult_count)
-                    print(understanding_count)
-                    print(reminding_count)
-                    print(creativity_count)
+
 
             elif question["level"] == "difficult" and question["objective"] == "reminding":
                 if 0<difficult_count<=int(difficult) and 0<reminding_count <= int(reminding):
@@ -273,7 +271,10 @@ class addExame(web.RequestHandler):
                 AnswerArray.append(a['answer_text'])
             QuestionWithAns={qeu['quetion']:AnswerArray}
             ExameData.append(QuestionWithAns)
-        self.render("../View/exam.html", data=ExameData)
+        if len(ExameData)==(int(simple)+int(difficult)):
+            self.render("../View/exam.html", data=ExameData,result=resultArray)
+        else:
+            self.redirect("addExame")
 
 
 class getChapters(web.RequestHandler):

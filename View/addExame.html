@@ -156,6 +156,7 @@ else
 });
 $("#error").text("");
 $("#myform").submit(function(e){
+
     var s_count =$("#simple").val();
     var d_count = $("#difficult").val();
     var r_count = $("#reminding").val();
@@ -163,9 +164,10 @@ $("#myform").submit(function(e){
     var c_count = $("#creativity").val();
     var courseID = $("#dropdown_id").val();
 
-    if(parsInt(s_count+d_count)!=parsInt(r_count+u_count+c_count))
+
+    if((parseInt(s_count)+parseInt(d_count))!=(parseInt(r_count)+parseInt(u_count)+parseInt(c_count)))
     {
-        alert("not equal")
+
         $("#error").text("Number of questions not equal");
         $("#msgError").css("display", "block");
          e.preventDefault();

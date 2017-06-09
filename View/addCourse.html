@@ -10,10 +10,10 @@
                         <div class="card">
                             <div class="header">
                                 <h4 class="title"> Table with course </h4>
-                                <p class="category">can update this course</p>
+
                             </div>
                             <div class="content table-responsive table-full-width">
-                                <form action="/addCourse" method="post" enctype="multipart/form-data">
+                                <form action="/addCourse" method="post" id="myform" enctype="multipart/form-data">
 
 
 
@@ -43,7 +43,7 @@
                                             <div class='form-group'>
                                                 <label for="add"></label>
 
-                                        <input type="submit" name="submit" value="Add" style="margin-left:50px;width:150px;color:blue;"/>
+                                        <input type="submit" name="submit" value="Add" id="add" style="margin-left:50px;width:150px;color:blue;"/>
                                             </div>
                                         </div>
                                          </div>
@@ -63,7 +63,28 @@
                     </div>
             </div>
         </div>
+<script>
+    jQuery(document).ready(function($) {
+    $("#myform").submit(function(e){
+    <!--alert("form send");-->
+    var letters = /^[A-Za-z]+$/;
+     var courseName = document.getElementById("title").value;
+     <!--alert(courseName);-->
+     if(courseName.match(letters))
+     {
+      return true;
+      $(this).unbind('submit').submit()
+     }
+      else
+      {
+        alert("course name not valid");
+        e.preventDefault();
+      }
 
+
+    });
+    });
+</script>
 
 
 
